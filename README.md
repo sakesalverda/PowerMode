@@ -25,3 +25,10 @@ This helper is sandboxed but with some temporary sbql exception rules (to allow 
 
 The app is written in SwiftUI, but some components provided by Apple, such as the `MenuBarExtra` are not really well implemented, yet. Detection of opening/closing and more is very pour, I included some fixed for this but they are quite sensitive to order of calling.
 
+## Other tools used in this project
+<https://github.com/sindresorhus/LaunchAtLogin>
+<https://github.com/orchetect/MenuBarExtraAccess>
+<https://github.com/orchetect/SettingsAccess>
+<http://sparkle-project.org>
+
+
