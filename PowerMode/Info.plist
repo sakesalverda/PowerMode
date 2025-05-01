@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSSupportsAutomaticTermination</key>
+	<true/>
+	<key>NSSupportsSuddenTermination</key>
+	<false/>
+	<key>SMPrivilegedExecutables</key>
+	<dict>
+		<key>nl.sakesalverda.PowerMode.helper</key>
+		<string>anchor apple generic and identifier "nl.sakesalverda.PowerMode.helper" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = TBPWL3H93F)</string>
+	</dict>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://sakesalverda.nl/powermode/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>HKsR5RhBHTnQcUyRt317zQjKWVS5aZ/fbjOzjpvgKt0=</string>
+</dict>
+</plist>
