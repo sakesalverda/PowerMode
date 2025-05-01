@@ -12,6 +12,9 @@ The repo is not currently very well formatted and still contains some old code t
 When debugging or contributing to the app, please be aware that there are issues when mixing development and release builds on your local device. Due to the way launchctl works, a development build of the helper application will not work with a release version of the main app and vica versa.
 Uninstalling the helper is not recognized properly by macOS and somewhere a cache is kept to the development helper when installing from the release build. I do not know the exact workings of this but the only fix I have found so far is to reset the helper by running **sfltool resetbtm**, please note that this command will reset most applications that should launch on login, meaning you have to set that up again.
 
+### Contributing
+When contributing please create a new branch and send a merge request to me for the main branch
+
 ## How does the app work?
 PowerMode is mainly a UI app that wraps around a helper application. The main app allows the user to configure the app layout and to change the energy mode.
 
