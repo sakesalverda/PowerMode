@@ -13,7 +13,9 @@ When debugging or contributing to the app, please be aware that there are issues
 Uninstalling the helper is not recognized properly by macOS and somewhere a cache is kept to the development helper when installing from the release build. I do not know the exact workings of this but the only fix I have found so far is to reset the helper by running **sfltool resetbtm**, please note that this command will reset most applications that should launch on login, meaning you have to set that up again.
 
 ### Contributing
-When contributing please create a new branch and send a merge request to me for the main branch
+If you want to contribute please reach out to me by sending an email or a message on GitHub.
+
+When contributing please create a new branch and make your updates in there and then create a merge request to the main branch.
 
 ## How does the app work?
 PowerMode is mainly a UI app that wraps around a helper application. The main app allows the user to configure the app layout and to change the energy mode.
