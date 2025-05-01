@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "menubarextraaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/MenuBarExtraAccess",
+      "state" : {
+        "revision" : "f5896b47e15e114975897354c7e1082c51a2bffd",
+        "version" : "1.0.5"
+      }
+    },
+    {
+      "identity" : "settingsaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/orchetect/SettingsAccess",
+      "state" : {
+        "revision" : "0fd73c8b5892e88acb13adb7f36a4ba9293a0061",
+        "version" : "1.4.0"
+      }
+    }
+  ],
+  "version" : 2
+}
