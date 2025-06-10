@@ -175,7 +175,7 @@ extension MenuToggleStyle {
                 AnyShapeStyle(.black)
             } else {
                 if isSelected {
-                    AnyShapeStyle(.white)
+                    AnyShapeStyle(.tint)
                 } else {
                     if colorSchemeContrast == .increased {
                         AnyShapeStyle(Color(nsColor: .windowBackgroundColor))
@@ -186,15 +186,35 @@ extension MenuToggleStyle {
             }
         }
         
+        var buttonHighlightedStyle: AnyShapeStyle {
+            if #available(macOS 26, *) {
+                AnyShapeStyle(.white)
+            } else {
+                AnyShapeStyle(.tint)
+            }
+        }
+        
+        var buttonHighlightedTextStyle: AnyShapeStyle {
+            if #available(macOS 26, *) {
+                if isSelected {
+                    AnyShapeStyle(.tint)
+                } else {
+                    AnyShapeStyle(.white.secondary)
+                }
+            } else {
+                foreground
+            }
+        }
+        
         func makeBody(configuration: Configuration) -> some View {
             HStack(spacing: 10) {
                 configuration.icon
                     .frame(width: 26, height: 26)
-                    .foregroundStyle(foreground)
+                    .foregroundStyle(buttonHighlightedTextStyle)
                     .background {
                         if isSelected {
                             Circle()
-                                .foregroundStyle(.tint)
+                                .foregroundStyle(buttonHighlightedStyle)
                                 .conditional(colorSchemeContrast == .increased && colorScheme != .light) {
                                     $0.overlay {
                                         Circle()
@@ -209,7 +229,7 @@ extension MenuToggleStyle {
                                     
                                 } else {
                                     Circle()
-                                        .foregroundStyle(.quaternary)
+                                        .foregroundStyle(.tertiary)
                                 }
                             }
                             .conditional(colorSchemeContrast == .increased) {

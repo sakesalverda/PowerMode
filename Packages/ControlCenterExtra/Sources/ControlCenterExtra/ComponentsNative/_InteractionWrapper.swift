@@ -25,6 +25,14 @@ struct OuterMenuItemWrapper: ViewModifier {
     
     var trigger: (() -> Void)?
     
+    var cornerRadius: CGFloat {
+        if #available(macOS 26, *) {
+            10
+        } else {
+            5
+        }
+    }
+    
     func body(content: Content) -> some View {
         content
             .conditional(shouldPress) {
@@ -36,11 +44,11 @@ struct OuterMenuItemWrapper: ViewModifier {
             .menuInset(.horizontal, to: .content)
             
             .background {
-                RoundedRectangle(cornerRadius: 5, style: .continuous)
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                     .foregroundStyle(.quaternary)
                     .opacity(isHovered && isEnabled ? 1 : 0)
             }
-            .contentShape(Rectangle())
+            .contentShape(.rect)
         
             // Hover setup
             .conditional(shouldHover) {
@@ -48,7 +56,7 @@ struct OuterMenuItemWrapper: ViewModifier {
                 $0.onReliableHover(binding: $isHovered)
             }
         
-            // Press setup
+//            // Press setup
             .conditional(shouldPress) {
                 $0.onReliablePress(binding: $isPressed) {
                     // when moving mouse out of the window, and then back

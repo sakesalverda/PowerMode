@@ -32,7 +32,7 @@ public struct MenuDisclosureStyle: DisclosureGroupStyle {
                 HStack {
                     configuration.label
                         .font(.callout.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.primary)
                     
                     Spacer()
                     
