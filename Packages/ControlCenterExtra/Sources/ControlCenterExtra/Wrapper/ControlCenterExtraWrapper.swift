@@ -87,20 +87,20 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
         // - the window doesn't fade out when closing from a click outside of the status bar
         MenuBarExtra {
             ScrollView(.vertical) {
-                MenuRoot {
-                    delegate.content()
+                if #available(macOS 26, *) {
+                    MenuRoot {
+                        delegate.content()
+                    }
+                    .windowSizeAnimationAnchor()
+                } else {
+                    MenuRoot {
+                        delegate.content()
+                    }
+                    .windowSizeAnimationAnchor()
+                    .background {
+                        BackgroundEffect()
+                    }
                 }
-                .background {
-                    BackgroundEffect()
-//                    VisualEffectView(.popover, blendingMode: .behindWindow)
-                    
-//                    VisualEffectView(.popover, vibrancy: true, blendingMode: .behindWindow)
-//                        .opacity(0.5)
-                    
-//                    Color.gray.opacity(0.1)
-                }
-                
-                .windowSizeAnimationAnchor()
             }
             .scrollIndicators(.never)
             .scrollBounceBehavior(.basedOnSize)
