@@ -21,9 +21,23 @@ struct AltTrackedModifier: ViewModifier {
     @State private var altKeyManager: AltKeyManager = .init()
     
     func body(content: Content) -> some View {
-        content
+        if #available(macOS 26, *) {
+            content
+                .environment(\.isAltKeyPressed, altKeyManager.isAltKeyPressed)
+            
+                .onAppear {
+                    altKeyManager.startObserving()
+                }
+                .onDisappear {
+                    altKeyManager.stopObserving()
+                }
+            
+                .onChange(of: scenePhase) { oldValue, newValue in
+                    print("Appear", oldValue, newValue)
+                }
+        } else {
+            content
             .environment(\.isAltKeyPressed, altKeyManager.isAltKeyPressed)
-
             .onChange(of: isMenuPresented, initial: true) { _, newValue in
                 if isMenuPresented == true {
                     altKeyManager.startObserving()
@@ -31,19 +45,6 @@ struct AltTrackedModifier: ViewModifier {
                     altKeyManager.stopObserving()
                 }
             }
-        
-//            .onChange(of: scenePhase, initial: true) { _, newValue in
-//                switch newValue {
-//                case .active:
-//                    altKeyManager.startObserving()
-//                default:
-//                    altKeyManager.stopObserving()
-//                }
-//                if newValue == .active {
-//                    altKeyManager.startObserving()
-//                } else {
-//                    altKeyManager.stopObserving()
-//                }
-//            }
+        }
     }
 }

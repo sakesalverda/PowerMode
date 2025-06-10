@@ -92,6 +92,13 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
                         delegate.content()
                     }
                     .windowSizeAnimationAnchor()
+                    
+                    .onAppear {
+                        menuDelegate.isPresented = true
+                    }
+                    .onDisappear {
+                        menuDelegate.isPresented = false
+                    }
                 } else {
                     MenuRoot {
                         delegate.content()
@@ -126,16 +133,18 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
             
             // this fixes that:
             // !!does not do this anymore: onAppear and onDissappear are called properly
-            // the scenePhase is properly managed
-            .appearManagedFix()
+            // but does do: the scenePhase is properly managed
+//            .appearManagedFix()
 
             // we need to propogate the class as we can't use a state variable here directly, i.e.
             // .environment(\.isMenuPresented, delegate.isPresented) will never update the actual environment value
             .propogate(menuDelegate) { content, delegate in
-                if delegate.isPresented {
-                    DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
-                } else {
-                    DistributedNotificationCenter.default().post(name: .endMenuTracking, object: nil)
+                if #unavailable(macOS 26) {
+                    if delegate.isPresented {
+                        DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
+                    } else {
+                        DistributedNotificationCenter.default().post(name: .endMenuTracking, object: nil)
+                    }
                 }
                 
                 return content.environment(\.isMenuPresented, delegate.isPresented)
@@ -159,18 +168,18 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
         // this fixes that the statusbar icon remains highlighted
         // this fixed that the mousedown triggers the menu
         // this is also required for the dynamic icon
-        .menuBarExtraAccess(isPresented: $isPresented) { statusItem in
-            if delegate.imageDelegate?.statusItem == nil {
-//                delegate.imageDelegate?.menuDelegate = menuDelegate
-                
-                delegate.imageDelegate?.statusItem = statusItem
-                delegate.imageDelegate?.statusItem?.title = ""
-                delegate.imageDelegate?.statusItem?.button?.title = ""
-            }
-            
-            // this fixes that the menu is opened on mouse down, instead of mouse up on the statusbar icon
-            mouseDownFixDelegate.statusItem = statusItem
-        }
+//        .menuBarExtraAccess(isPresented: $isPresented) { statusItem in
+//            if delegate.imageDelegate?.statusItem == nil {
+////                delegate.imageDelegate?.menuDelegate = menuDelegate
+//                
+//                delegate.imageDelegate?.statusItem = statusItem
+//                delegate.imageDelegate?.statusItem?.title = ""
+//                delegate.imageDelegate?.statusItem?.button?.title = ""
+//            }
+//            
+//            // this fixes that the menu is opened on mouse down, instead of mouse up on the statusbar icon
+//            mouseDownFixDelegate.statusItem = statusItem
+//        }
         .onChange(of: isPresented) {
             menuDelegate.isPresented = isPresented
         }

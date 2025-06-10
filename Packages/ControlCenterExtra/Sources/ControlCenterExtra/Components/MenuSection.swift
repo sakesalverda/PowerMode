@@ -46,9 +46,16 @@ public struct MenuSection<Content: View, Label: View>: View {
         VStack(spacing: 0) {
             if let label = label {
                 HStack {
-                    label
-                        .font(.callout.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                    if #unavailable(macOS 26) {
+                        label
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    } else {
+                        label
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.primary) // @todo: not the correct tinting
+                    }
+//                        .blendMode(.sourceAtop)
                     
                     Spacer()
                 }
