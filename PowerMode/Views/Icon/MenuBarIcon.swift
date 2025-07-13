@@ -475,6 +475,7 @@ struct MenuBarImage: View {
                         }
                     }
                     
+                    // this is outside the ZStack such that the energy mode indicator is above the numbers only
                     if menuIconVariant == .percentage {
                         Text("%")
                     }

@@ -110,17 +110,15 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
             // set the window
             .windowContentResizeAnimated()
 
-            // track the alt key and update the environment value
+            // track the alt key (and update the environment value)
             .altKeyTracked()
             
-            // this fixes that:
-            // the menu will be dismissed when pressing the esc key
+            // the menu will be dismissed when pressing the esc key (somehow not default behaviour)
             .dismissOnEscapeFix()
 
             // this fixes that:
             // in fullscreen, the statusbar remains active while the menu is open
-            // in a new OS update, the scenechange is not called anymore when closing the app
-//            .trackingFix(menuDelegate: menuDelegate)
+            .trackingFix()
 
             .environment(\.dismissMenu, dismissMenu)
             
@@ -132,11 +130,12 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
             // we need to propogate the class as we can't use a state variable here directly, i.e.
             // .environment(\.isMenuPresented, delegate.isPresented) will never update the actual environment value
             .propogate(menuDelegate) { content, delegate in
-                if delegate.isPresented {
-                    DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
-                } else {
-                    DistributedNotificationCenter.default().post(name: .endMenuTracking, object: nil)
-                }
+//                print("PROPOGATE,", delegate.isPresented)
+//                if delegate.isPresented {
+//                    DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
+//                } else {
+//                    DistributedNotificationCenter.default().post(name: .endMenuTracking, object: nil)
+//                }
                 
                 return content.environment(\.isMenuPresented, delegate.isPresented)
             }

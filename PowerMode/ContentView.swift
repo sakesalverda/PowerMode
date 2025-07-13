@@ -328,7 +328,33 @@ struct ContentView: View {
 //        #endif
         
         Section {
-            MenuSettingsLink("PowerMode Settings…")
+            VStack(spacing: 0) {
+                if isAppleBatteryReplacement {
+                    OpenBatterySettingsButton()
+                }
+                
+                MenuSettingsLink("PowerMode Settings…")
+            }
+        }
+    }
+}
+
+fileprivate struct OpenBatterySettingsButton: View {
+    @Environment(\.dismissMenu) private var dismissMenu
+    
+    var body: some View {
+        VStack {
+            Button("Battery Settings…") {
+                dismissMenu()
+                
+                openPrivacySecuritySettings()
+            }
+        }
+    }
+
+    private func openPrivacySecuritySettings() {
+        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.battery") {
+            NSWorkspace.shared.open(url)
         }
     }
 }
