@@ -1130,6 +1130,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = nl.sakesalverda.PowerMode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1162,6 +1163,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = nl.sakesalverda.PowerMode;
 				PRODUCT_NAME = "$(TARGET_NAME)";
