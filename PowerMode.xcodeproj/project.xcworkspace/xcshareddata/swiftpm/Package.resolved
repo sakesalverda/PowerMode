@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/orchetect/MenuBarExtraAccess",
       "state" : {
-        "revision" : "e911e6454f8cbfe34a52136fc48e1ceb989a60e7",
-        "version" : "1.2.1"
+        "revision" : "707dff6f55217b3ef5b6be84ced3e83511d4df5c",
+        "version" : "1.2.2"
       }
     },
     {

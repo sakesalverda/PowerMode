@@ -24,22 +24,17 @@ struct AltTrackedModifier: ViewModifier {
         content
             .environment(\.isAltKeyPressed, altKeyManager.isAltKeyPressed)
 
-            .onChange(of: isMenuPresented, initial: true) { _, newValue in
-                if isMenuPresented == true {
-                    altKeyManager.startObserving()
-                } else {
-                    altKeyManager.stopObserving()
-                }
+            .onAppear {
+                print("OBSERVING START")
+                altKeyManager.startObserving()
             }
         
-//            .onChange(of: scenePhase, initial: true) { _, newValue in
-//                switch newValue {
-//                case .active:
-//                    altKeyManager.startObserving()
-//                default:
-//                    altKeyManager.stopObserving()
-//                }
-//                if newValue == .active {
+            .onDisappear {
+                print("OBSERVING STOP")
+                altKeyManager.stopObserving()
+            }
+//            .onChange(of: isMenuPresented, initial: true) { _, newValue in
+//                if isMenuPresented == true {
 //                    altKeyManager.startObserving()
 //                } else {
 //                    altKeyManager.stopObserving()

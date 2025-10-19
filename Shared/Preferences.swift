@@ -77,6 +77,21 @@ public final class Preferences: Sendable {
     }
     
     @ObservationIgnored
+    @MainActor var hidePowerModeSettingsButtonInMenu: Bool {
+        get {
+            access(keyPath: \.hidePowerModeSettingsButtonInMenu)
+            
+            return Defaults.hidePowerModeSettingsButtonInMenu.wrappedValue
+        }
+        
+        set {
+            withMutation(keyPath: \.hidePowerModeSettingsButtonInMenu) {
+                Defaults.hidePowerModeSettingsButtonInMenu.wrappedValue = newValue
+            }
+        }
+    }
+    
+    @ObservationIgnored
     @MainActor var displayBatteryRemainingInMenu: MenuBarBatteryRemainingDisplayOptions {
         get {
             access(keyPath: \.displayBatteryRemainingInMenu)

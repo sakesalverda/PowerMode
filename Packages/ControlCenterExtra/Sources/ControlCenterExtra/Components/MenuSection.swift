@@ -48,7 +48,7 @@ public struct MenuSection<Content: View, Label: View>: View {
                 HStack {
                     label
                         .font(.callout.weight(.semibold))
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color(nsColor: .secondaryLabelColor))
                     
                     Spacer()
                 }

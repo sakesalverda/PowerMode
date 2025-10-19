@@ -36,11 +36,11 @@ struct OuterMenuItemWrapper: ViewModifier {
             .menuInset(.horizontal, to: .content)
             
             .background {
-                RoundedRectangle(cornerRadius: 5, style: .continuous)
-                    .foregroundStyle(.quaternary)
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .foregroundStyle(Color(nsColor: .quaternaryLabelColor))
                     .opacity(isHovered && isEnabled ? 1 : 0)
             }
-            .contentShape(Rectangle())
+            .contentShape(.rect)
         
             // Hover setup
             .conditional(shouldHover) {

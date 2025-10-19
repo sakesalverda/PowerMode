@@ -34,15 +34,19 @@ struct MouseInsideModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .background(
-                GeometryReader { proxy in
-                    Representable(mouseIsInside: { hovering in
-                        self.isHovered = hovering
-                    },
-                  frame: proxy.frame(in: .global))
-                }
-            )
-            .onChange(of: isHovered, initial: true) {
+        // it appears the hovering glitches are fixed in macOS 26
+//            .background(
+//                GeometryReader { proxy in
+//                    Representable(mouseIsInside: { hovering in
+//                        self.isHovered = hovering
+//                    },
+//                  frame: proxy.frame(in: .global))
+//                }
+//            )
+//            .onChange(of: isHovered, initial: true) {
+//                mouseIsInside(isEnabled && isHovered)
+//            }
+            .onHover { isHovered in
                 mouseIsInside(isEnabled && isHovered)
             }
             .onChange(of: isEnabled) {
@@ -66,28 +70,37 @@ struct MouseInsideModifier: ViewModifier {
             var mouseIsInside: ((Bool) -> Void)?
             
             override func mouseEntered(with event: NSEvent) {
+                print("MOUSE entered")
                 mouseIsInside?(true)
             }
             
             override func mouseExited(with event: NSEvent) {
+                print("MOUSE leaved")
                 mouseIsInside?(false)
             }
         }
         
         func makeNSView(context: Context) -> NSView {
-            let view = NSView(frame: frame)
+            let frame_new = NSRect(origin: .init(x:1180, y: frame.origin.y), size: frame.size)
+            
+            let view = NSView(frame: frame_new)
+            
+            print("MOUSE makeNSView")
             
             let options: NSTrackingArea.Options = [
                 .mouseEnteredAndExited,
-                .inVisibleRect,
-                .activeAlways
+//                .inVisibleRect,
+                .activeAlways,
 //                .activeInKeyWindow
             ]
             
-            let trackingArea = NSTrackingArea(rect: frame,
+            let trackingArea = NSTrackingArea(rect: frame_new,
                                               options: options,
                                               owner: context.coordinator,
                                               userInfo: nil)
+            
+            print("MOUSE makeNSView", frame)
+            print("MOUSE makeNSView", frame_new)
             
             view.addTrackingArea(trackingArea)
             
