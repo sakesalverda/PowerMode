@@ -44,6 +44,7 @@ public enum Defaults {
     
     
     @MainActor static let isBatteryReplacement = D(DefaultsKey.isBatteryReplacement, value: false)
+    @MainActor static let hidePowerModeSettingsButtonInMenu = D(DefaultsKey.hidePowerModeSettingsButtonInMenu, value: false)
     
     @MainActor static let menuBarMainIconVariant = D(DefaultsKey.menuBarMainIconVariant, value: MenuBarIconVariant.default)
     @MainActor static let menuBarIconEnergyModeVariant = D(DefaultsKey.menuBarIconEnergyModeVariant, value: MenuBarEnergyModeIndicatorVariant.icon)
@@ -65,6 +66,7 @@ public enum DefaultsKey: CaseIterable {
     static let chargeLimitEnabled = "pref_chargeLimitEnabled"
     
     static let isBatteryReplacement = "pref_replacedBatteryItem"
+    static let hidePowerModeSettingsButtonInMenu = "pref_hidePowerModeSettingsButton"
     
 //    static let hideMainIcon = "pref_menu_hideMainIcon"
 //

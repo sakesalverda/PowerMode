@@ -120,6 +120,8 @@ public struct MenuContent<Content: View>: View {
 }
 
 fileprivate  struct DividedLayout: _VariadicView_MultiViewRoot {
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    
     @ViewBuilder func body(children: _VariadicView.Children) -> some View {
         let first = children.first?.id
         let last = children.last?.id
@@ -158,6 +160,9 @@ fileprivate  struct DividedLayout: _VariadicView_MultiViewRoot {
                 if !isLast {
                     Divider()
                         .opacity(isForGroup && isCollapsed ? 0 : 1)
+                        .conditional(colorSchemeContrast == .increased) {
+                            $0.overlay(Color(nsColor: .quaternaryLabelColor))
+                        }
                         .zIndex(0)
                         // since we place the divider after each element, we check here whether this item, or the next item
                         // is elevated, such that we properly adjust the inset of the divider

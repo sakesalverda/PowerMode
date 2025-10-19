@@ -39,10 +39,12 @@ public extension View {
         _ condition: Bool,
         @ViewBuilder transform: (Self) -> some View
     ) -> some View {
-        if condition {
-            transform(self)
-        } else {
-            self
+        Group {
+            if condition {
+                transform(self)
+            } else {
+                self
+            }
         }
     }
 }

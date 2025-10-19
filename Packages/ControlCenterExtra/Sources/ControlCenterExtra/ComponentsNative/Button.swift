@@ -69,6 +69,8 @@ public struct MenuButtonStyle: PrimitiveButtonStyle {
     @Environment(\.menuButtonContentAlignment) private var alignment
     @Environment(\.controlSize) private var controlSize
     
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
+    
     @State private var isPressed: Bool = false
     @State private var isHovered: Bool = false
     
@@ -78,7 +80,12 @@ public struct MenuButtonStyle: PrimitiveButtonStyle {
                 Spacer(minLength: 0)
             }
             
-            configuration.label
+            VStack {
+                configuration.label
+                    .foregroundStyle(colorSchemeContrast == .increased ? Color.primary : Color(nsColor: .controlTextColor))
+            }
+            
+            
             
             if alignment != .trailing {
                 Spacer(minLength: 0)

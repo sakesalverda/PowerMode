@@ -177,20 +177,32 @@ extension MenuToggleStyle {
                 if isSelected {
                     AnyShapeStyle(.white)
                 } else {
-                    if colorSchemeContrast == .increased {
-                        AnyShapeStyle(Color(nsColor: .windowBackgroundColor))
+                    if colorScheme == .light && colorSchemeContrast == .increased {
+                        AnyShapeStyle(.white)
                     } else {
-                        AnyShapeStyle(.secondary)
+                        AnyShapeStyle(Color(nsColor: .secondaryLabelColor))
                     }
                 }
+            }
+        }
+        
+        private var foregroundolorScheme: ColorScheme {
+            if lightIcon == false && isSelected == false && colorSchemeContrast == .increased {
+                .light
+            } else {
+                colorScheme
             }
         }
         
         func makeBody(configuration: Configuration) -> some View {
             HStack(spacing: 10) {
                 configuration.icon
+                    .symbolRenderingMode(.hierarchical)
+                    .fontWeight(.semibold)
                     .frame(width: 26, height: 26)
+                    .opacity(isPressed ? 0.667 : 1.00)
                     .foregroundStyle(foreground)
+                    .environment(\.colorScheme, foregroundolorScheme)
                     .background {
                         if isSelected {
                             Circle()
@@ -204,9 +216,10 @@ extension MenuToggleStyle {
                         } else {
                             Group {
                                 if colorSchemeContrast == .increased {
-                                    Circle()
-                                        .foregroundStyle(isHovered ? .secondary : .tertiary)
-                                    
+                                    ZStack {
+                                        Circle()
+                                            .foregroundStyle(isHovered ? Color(nsColor: .secondaryLabelColor) : Color(nsColor: .tertiaryLabelColor))
+                                    }
                                 } else {
                                     Circle()
                                         .foregroundStyle(.quaternary)
@@ -220,16 +233,18 @@ extension MenuToggleStyle {
                             }
                         }
                     }
-                    .overlay {
-                        if isPressed {
-                            Circle()
-                                .foregroundStyle(.primary)
-                                .opacity(0.15)
-                                .preferredColorScheme(colorScheme == .dark ? .light : .dark)
-                        }
-                    }
+//                    .overlay {
+//                        if isPressed {
+//                            Circle()
+//                                .foregroundStyle(.primary)
+//                                .opacity(0.15)
+//                                .preferredColorScheme(colorScheme == .dark ? .light : .dark)
+//                        }
+//                    }
                 
                 configuration.title
+                    .foregroundStyle(colorSchemeContrast == .increased ? Color.primary : Color(nsColor: .controlTextColor))
+                    .opacity(isPressed ? 0.667 : 1.00)
                 
                 Spacer(minLength: 0)
             }

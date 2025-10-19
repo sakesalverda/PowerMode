@@ -28,6 +28,7 @@ struct SettingsAppearanceView: View {
     @Preference(\.enableSettingChargeLimit) private var enableChargeLimit
     
     @Preference(\.isAppleBatteryReplacement) private var isAppleBatteryReplacement
+    @Preference(\.hidePowerModeSettingsButtonInMenu) private var hidePowerModeSettingButtonInMenu
     
     var body: some View {
         Form {
@@ -140,6 +141,11 @@ struct SettingsAppearanceView: View {
 //                        .animation(.interpolatingSpring(duration: 0.3, bounce: 0.8), value: menuIconVariant)
 //                        .animation(.interpolatingSpring, value: displayBatteryPercentage)
 //                }
+                
+                VStack(alignment: .leading) {
+                    Toggle("Hide PowerMode settings button in Menu Bar item", isOn: $hidePowerModeSettingButtonInMenu)
+                }
+                .disabled(!isAppleBatteryReplacement)
                 
                 VStack(alignment: .leading) {
                     Picker("Display time remaining on battery", selection: $displayBatteryRemainingInMenu) {

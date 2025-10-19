@@ -55,6 +55,7 @@ struct ContentView: View {
     @Preference(\.hideHighPowerModeOnBattery) private var hidePowerModeOnBattery
     
     @ReadPreference(\.isAppleBatteryReplacement) private var isAppleBatteryReplacement
+    @ReadPreference(\.hidePowerModeSettingsButtonInMenu) private var hidePowerModeSettingsButtonInMenu
     
     @Preference(\.displayBatteryPercentageInMenu) private var displayBatteryPercentage
     
@@ -291,6 +292,7 @@ struct ContentView: View {
                         batteryEnergyModeSelector
                     } label: {
                         Text("Battery")
+                            .foregroundStyle(Color(nsColor: .secondaryLabelColor))
                             .activePowerSourceIndicator(for: .battery)
                     }
                     .menuCollapseToGroup()
@@ -299,6 +301,7 @@ struct ContentView: View {
                         adapterEnergyModeSelector
                     } label: {
                         Text("Power Adapter")
+                            .foregroundStyle(Color(nsColor: .secondaryLabelColor))
                             .activePowerSourceIndicator(for: .adapter)
                     }
                 }
@@ -333,7 +336,9 @@ struct ContentView: View {
                     OpenBatterySettingsButton()
                 }
                 
-                MenuSettingsLink("PowerMode Settings…")
+                if false == (isAppleBatteryReplacement && hidePowerModeSettingsButtonInMenu) || isAltKeyPressed {
+                    MenuSettingsLink("PowerMode Settings…")
+                }
             }
         }
     }

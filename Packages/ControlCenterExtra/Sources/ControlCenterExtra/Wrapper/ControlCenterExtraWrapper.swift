@@ -15,7 +15,7 @@ fileprivate let kUseNativeImplementation = ControlCenterExtraWrapper<AnyView, An
 
 extension ControlCenterExtraWrapper {
     func emptyImagePlaceholder(size: CGSize? = nil) -> NSImage {
-        emptyImagePlaceholder(width: size?.width, height: size?.height)
+        return emptyImagePlaceholder(width: size?.width, height: size?.height)
     }
     
     func emptyImagePlaceholder(width: CGFloat? = nil, height: CGFloat? = nil) -> NSImage {
@@ -42,7 +42,7 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
     var dismissMenu: DismissMenuAction {
         .init {
             isPresented = false
-//            menuDelegate.isPresented = false
+            menuDelegate.isPresented = false
         }
     }
     
@@ -90,14 +90,15 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
                 MenuRoot {
                     delegate.content()
                 }
-                .background {
-                    BackgroundEffect()
-//                    VisualEffectView(.popover, blendingMode: .behindWindow)
-                    
-//                    VisualEffectView(.popover, vibrancy: true, blendingMode: .behindWindow)
-//                        .opacity(0.5)
-                    
-//                    Color.gray.opacity(0.1)
+//                .background {
+//                    BackgroundEffect()
+//                }
+                
+                .onAppear {
+                    menuDelegate.isPresented = true
+                }
+                .onDisappear {
+                    menuDelegate.isPresented = false
                 }
                 
                 .windowSizeAnimationAnchor()
@@ -125,18 +126,11 @@ public struct ControlCenterExtraWrapper<Label: View, Content: View>: Scene {
             // this fixes that:
             // !!does not do this anymore: onAppear and onDissappear are called properly
             // the scenePhase is properly managed
-            .appearManagedFix()
+//            .appearManagedFix()
 
             // we need to propogate the class as we can't use a state variable here directly, i.e.
             // .environment(\.isMenuPresented, delegate.isPresented) will never update the actual environment value
             .propogate(menuDelegate) { content, delegate in
-//                print("PROPOGATE,", delegate.isPresented)
-//                if delegate.isPresented {
-//                    DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
-//                } else {
-//                    DistributedNotificationCenter.default().post(name: .endMenuTracking, object: nil)
-//                }
-                
                 return content.environment(\.isMenuPresented, delegate.isPresented)
             }
         } label: {
